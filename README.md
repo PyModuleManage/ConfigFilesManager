@@ -29,4 +29,4 @@ cfm.is_correct_information()
 
 # Contribution
 
-Please see CONTRIBUTE.md
+Please see [CONTRIBUTE.md](CONTRIBUTE.md)
