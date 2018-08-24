@@ -1,10 +1,16 @@
 import os
-# import sys
+import sys
 
-from ConfigExceptions import ConfigException
-from ConfigExceptions import KeyNotInConfigFile
-from ConfigExceptions import NotValidValueConfig
-from ConfigExceptions import RequiredNotExiste
+PACKAGE_PARENT = '..'
+SCRIPT_DIR = os.path.dirname(os.path.realpath(
+    os.path.join(os.getcwd(), os.path.expanduser(__file__))))
+sys.path.append(os.path.normpath(os.path.join(SCRIPT_DIR, PACKAGE_PARENT)))
+
+from ConfigFilesManager import ConfigException
+from ConfigFilesManager import NotValidValueConfig
+from ConfigFilesManager import KeyNotInConfigFile
+from ConfigFilesManager import RequiredNotExiste
+
 import configparser
 
 
