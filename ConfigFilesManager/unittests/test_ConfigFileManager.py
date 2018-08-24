@@ -50,6 +50,22 @@ class TestConfigFileManager(unittest.TestCase):
         self.assertEqual(self.config_output_waiting,
                          self.configfilemanager.parser_config_dict)
 
+    def test_NotValidValueConfig(self):
+        config_squema2 = "config_squema2.json"
+        confgi_squema2_value = None
+        with open(os.path.join(self.inputs_folder,
+                               config_squema2)) as f:
+            config_squema2_value = json.loads(f.read())
+
+        self.configfilemanager = configFilesManager.configFilesManager(
+            os.path.join(self.inputs_folder, self.name_config),
+            config_squema2_value)
+
+        self.assertRaises(NotValidValueConfig,
+                          self.configfilemanager.is_correct_information())
+
+        self.assertRaises(KeyNotInConfigFile,
+                          self.configfilemanager.is_correct_information())
 
 if __name__ == '__main__':
     unittest.main()
