@@ -51,8 +51,8 @@ class TestConfigFileManager(unittest.TestCase):
                          self.configfilemanager.parser_config_dict)
 
     def test_NotValidValueConfig(self):
-        config_squema2 = "config_squema2.json"
-        confgi_squema2_value = None
+        config_squema2 = 'config_squema2.json'
+        config_squema2_value = None
         with open(os.path.join(self.inputs_folder,
                                config_squema2)) as f:
             config_squema2_value = json.loads(f.read())
@@ -62,10 +62,23 @@ class TestConfigFileManager(unittest.TestCase):
             config_squema2_value)
 
         self.assertRaises(NotValidValueConfig,
-                          self.configfilemanager.is_correct_information())
+                          self.configfilemanager.is_correct_information)
 
-        self.assertRaises(KeyNotInConfigFile,
-                          self.configfilemanager.is_correct_information())
+    def test_RequiredNotExiste(self):
+        config_squema3 = 'config_squema3.json'
+        name_config2 = 'config2.ini'
+        config_squema3_value = None
+        with open(os.path.join(self.inputs_folder,
+                               config_squema3)) as f:
+            config_squema3_value = json.loads(f.read())
+
+        self.configfilemanager = None
+        self.configfilemanager = configFilesManager.configFilesManager(
+            os.path.join(self.inputs_folder, name_config2),
+            config_squema3_value)
+        self.assertRaises(RequiredNotExiste,
+                          self.configfilemanager.is_correct_information)
+
 
 if __name__ == '__main__':
     unittest.main()

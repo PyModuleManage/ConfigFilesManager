@@ -44,6 +44,7 @@ class configFilesManager(object):
                 pass
 
             if value2_dict['type'] == 'int':
+                print(key_config, key2_dict)
                 self.parser_config_dict[key_config][key2_dict] = \
                     self.config.getint(key_config, key2_dict)
                 flag_used = True
@@ -67,6 +68,12 @@ class configFilesManager(object):
                     self.config[key_config][key2_dict]
                 flag_used = True
 
+        except configparser.NoOptionError as error:
+            if required:
+                raise KeyNotInConfigFile("{} Does not exist on Config File "
+                                         "this is required".format(error))
+            else:
+                pass
         except KeyError as keyerror:
             if required:
                 raise KeyNotInConfigFile("{} Does not exist on Config File "
@@ -92,10 +99,12 @@ class configFilesManager(object):
                             try:
                                 self.___update_parser_config_dict(key_config,
                                                                   key2_dict,
-                                                                  values2_dict)
+                                                                  values2_dict,
+                                                                  True)
                             except KeyNotInConfigFile as keynoterror:
                                 raise RequiredNotExiste('Required '\
                                      'value: {}'.format(keynoterror))
+
                         if key2_dict.lower() in options and values2_dict[
                             'required']\
                             == False:
