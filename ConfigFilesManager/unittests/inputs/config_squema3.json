@@ -6,7 +6,7 @@
     },
     "PORT":{
       "required": true,
-      "type":"bool"
+      "type":"int"
     },
     "DB_NAME":{
       "required": true,
