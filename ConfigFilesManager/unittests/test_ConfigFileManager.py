@@ -46,7 +46,7 @@ class TestConfigFileManager(unittest.TestCase):
         self.assertIsInstance(self.config_output_waiting, dict)
 
     def test_parser_config(self):
-        self.configfilemanager.is_correct_information()
+        self.configfilemanager.run_check()
         self.assertEqual(self.config_output_waiting,
                          self.configfilemanager.parser_config_dict)
 
@@ -62,7 +62,7 @@ class TestConfigFileManager(unittest.TestCase):
             config_squema2_value)
 
         self.assertRaises(NotValidValueConfig,
-                          self.configfilemanager.is_correct_information)
+                          self.configfilemanager.run_check)
 
     def test_RequiredNotExiste(self):
         config_squema3 = 'config_squema3.json'
@@ -77,7 +77,7 @@ class TestConfigFileManager(unittest.TestCase):
             os.path.join(self.inputs_folder, name_config2),
             config_squema3_value)
         self.assertRaises(RequiredNotExiste,
-                          self.configfilemanager.is_correct_information)
+                          self.configfilemanager.run_check)
 
 
 if __name__ == '__main__':

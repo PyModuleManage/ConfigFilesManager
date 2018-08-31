@@ -44,7 +44,6 @@ class configFilesManager(object):
                 pass
 
             if value2_dict['type'] == 'int':
-                print(key_config, key2_dict)
                 self.parser_config_dict[key_config][key2_dict] = \
                     self.config.getint(key_config, key2_dict)
                 flag_used = True
@@ -84,6 +83,15 @@ class configFilesManager(object):
         except ValueError as valueerror:
             raise NotValidValueConfig('Not valid Type: {}'.format(valueerror))
 
+    def check_required(self):
+        for key, value in self.dict_config_allows.items():
+            for k, v in value.items():
+                if v['required']:
+                    if not self.config.has_option(key, k):
+                        raise RequiredNotExiste(
+                            "{} Does not exist on Config File "
+                            "this is required".format(k))
+
     def is_correct_information(self):
         for key_dict, values_dict in self.dict_config_allows.items():
             for key_config in list(self.config.sections()):
@@ -112,3 +120,7 @@ class configFilesManager(object):
                             self.___update_parser_config_dict(key_config,
                                                               key2_dict,
                                                               values2_dict)
+
+    def run_check(self):
+        self.check_required()
+        self.is_correct_information()
